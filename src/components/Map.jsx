@@ -1,29 +1,7 @@
-import React/* , { useState } */ from "react";
-import { GoogleMap, Marker, useLoadScript/* , InfoWindow */ } from '@react-google-maps/api';
-
-const markers = [
-    {
-      id: 1,
-      name: "Chedraui Coacalco",
-      position: {lat : 19.6449616, lng : -99.1079148}
-    },
-    {
-      id: 2,
-      name: "Walmart Express Viveros",
-      position: { lat: 19.5315632, lng: -99.21999220000001 }
-    },
-    {
-      id: 3,
-      name: "MEXICO CHEDRAUI Tecámac",
-      position: { lat: 19.6256661, lng: -99.03527459999999 }
-    },
-    {
-      id: 4,
-      name: "Walmart Express Lomas Verdes",
-      position: { lat: 19.506799, lng: -99.2597529 }
-    }
-  ];
-
+import React/* , { useState } */ from 'react';
+import { GoogleMap, Marker, useLoadScript/* , InfoWindow  */} from '@react-google-maps/api';
+/* import markersJson from "https://maps.googleapis.com/maps/api/place/textsearch/json?query=walmart&location=18.8528361%2C-99.1783595&radius=2000&key=AIzaSyCFfFHM_uUO6n_mmuUvzZCdPsFs9gP2Cl0"; */
+import markersApi from "../../src/data/data-api.json";
 
 export default function Map() {
     const { isLoaded } = useLoadScript({
@@ -33,44 +11,52 @@ export default function Map() {
     if (!isLoaded) return <div>Loading...</div> 
 
 
-    /* const [activeMarker, setActiveMarker] = useState(null);
+   /*  const [activeMarker, setActiveMarker] = useState(null);
     const handleActiveMarker = (marker) => {
         if (marker === activeMarker) {
           return;
         }
         setActiveMarker(marker);
       }; */
+
     
     const center = {lat: 19.432608, lng: -99.133209}
+
+    let sucursalJson = markersApi.results.map((item) => item.name)
+    console.log(sucursalJson);
 
     return(
         <div>
             <GoogleMap
-                zoom={10}
+                zoom={12}
                 center={center}
                 mapContainerStyle={{
-                    width: '600px',
-                    height: '400px'
+                    width: '900px',
+                    height: '500px'
                 }}
             >
                 
-                {markers.map(({ id, name, position }) => (
+                {markersApi.results.map(({ place_id, name, geometry, icon }) => (
                     <Marker
-                    icon={"https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png"}
-                    key={id}
-                    position={position}
+                    icon={icon}
+                    key={place_id}
+                    position={geometry.location}
                     onClick={() => console.log(name)}
-                    /* onClick={() => handleActiveMarker(id)} */
+                    /* onClick={() => handleActiveMarker(place_id)} */
+                    
                     >
-                    {/* {activeMarker === id ? (
+                    {/* {activeMarker === place_id ? (
                         <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                         <div>{name}</div>
                         </InfoWindow>
                     ) : null} */}
-                    </Marker>
-                ))}   
+  A                  </Marker>
+                ))}  
                 
             </GoogleMap>
     </div>
     )
-} 
+}
+
+
+
