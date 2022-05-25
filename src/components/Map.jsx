@@ -1,29 +1,28 @@
-import React/* , { useState } */ from 'react';
-import { GoogleMap, Marker, useLoadScript/* , InfoWindow  */} from '@react-google-maps/api';
+import React, { useState } from 'react';
+import { GoogleMap, Marker, useJsApiLoader, InfoWindow } from '@react-google-maps/api';
 /* import markersJson from "https://maps.googleapis.com/maps/api/place/textsearch/json?query=walmart&location=18.8528361%2C-99.1783595&radius=2000&key=AIzaSyCFfFHM_uUO6n_mmuUvzZCdPsFs9gP2Cl0"; */
 import markersApi from "../../src/data/data-api.json";
 
 export default function Map() {
-    const { isLoaded } = useLoadScript({
-        /* googleMapsApiKey:  process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY, */
-        googleMapsApiKey:  "AIzaSyCFfFHM_uUO6n_mmuUvzZCdPsFs9gP2Cl0",
-    });
-    if (!isLoaded) return <div>Loading...</div> 
 
+    const {isLoaded} = useJsApiLoader({
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    })
 
-   /*  const [activeMarker, setActiveMarker] = useState(null);
+    /* const [mapRef, setMapRef] = useState(null) */
+
+    const [activeMarker, setActiveMarker] = useState(null);
     const handleActiveMarker = (marker) => {
         if (marker === activeMarker) {
           return;
         }
         setActiveMarker(marker);
-      }; */
+      };
 
-    
+    if (!isLoaded) { return <div>Loading...</div> }
+
     const center = {lat: 19.432608, lng: -99.133209}
 
-    let sucursalJson = markersApi.results.map((item) => item.name)
-    console.log(sucursalJson);
 
     return(
         <div>
@@ -34,23 +33,27 @@ export default function Map() {
                     width: '900px',
                     height: '500px'
                 }}
+                /* onLoad={ (mapRef) => setMapRef(mapRef)} */
             >
                 
-                {markersApi.results.map(({ place_id, name, geometry, icon }) => (
+                {markersApi.results.map(({ place_id, name, geometry, icon, business_status}) => (
                     <Marker
                     icon={icon}
                     key={place_id}
                     position={geometry.location}
-                    onClick={() => console.log(name)}
-                    /* onClick={() => handleActiveMarker(place_id)} */
-                    
+                    /* onClick={() => console.log(name)} */
+                    onClick={() => handleActiveMarker(place_id)}
                     >
-                    {/* {activeMarker === place_id ? (
+                    {activeMarker === place_id ? (
                         <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-                        <div>{name}</div>
+                        <div>
+                            {name}
+                            <br/>
+                            {business_status}
+                        </div>
                         </InfoWindow>
-                    ) : null} */}
-  A                  </Marker>
+                    ) : null}
+                    </Marker>
                 ))}  
                 
             </GoogleMap>
