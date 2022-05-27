@@ -1,0 +1,12 @@
+.btn-comprar{
+    background-color: #159A40;
+    color: #fff;
+    padding: 20px 50px;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.btn-comprar:hover{
+    background-color: #fc8523;
+}

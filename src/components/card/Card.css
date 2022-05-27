@@ -1,0 +1,11 @@
+.card-shop{
+    padding: 35px 10px 35px 10px;
+    object-fit: contain;
+    box-shadow: 4px 8px 19px 0 rgba(105, 105, 105, 0.16);
+    background-color: #fff;
+    margin-bottom: 25px;
+}
+
+.logo-tienda{
+    width: 250px;
+}

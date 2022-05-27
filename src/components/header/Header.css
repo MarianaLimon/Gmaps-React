@@ -1,0 +1,16 @@
+.header{
+    background-color: #fc8523;
+}
+
+h3.title{
+    color: #fff;
+    font-family: Poppins;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 10px;
+}
+
+.logoBafar{
+    width: 130px;
+}
