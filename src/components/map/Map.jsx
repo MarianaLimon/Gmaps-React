@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { GoogleMap, Marker, useJsApiLoader, InfoWindow } from '@react-google-maps/api';
-/* import markersJson from "https://maps.googleapis.com/maps/api/place/textsearch/json?query=walmart&location=18.8528361%2C-99.1783595&radius=2000&key=AIzaSyCFfFHM_uUO6n_mmuUvzZCdPsFs9gP2Cl0"; */
-import markersApi from "../../../src/assets/data/data-api.json";
+/* import markersApi from "https://bafar1.wpengine.com/api/data.php?query=all&location=18.9821252%2C-99.2363548"; */
+import markersJson from "../../../src/assets/data/data-api.json";
+
+import markersApi from "../../../src/assets/data/data-api-v2.json";
 
 export default function Map() {
 
@@ -23,10 +25,23 @@ export default function Map() {
 
     const center = {lat: 19.432608, lng: -99.133209}
 
+    
+    let newArray = []
+
+    Object.entries(markersApi).forEach(([key, value]) => {
+        Object.entries(value.results).forEach(([key, value]) => newArray.push(value))
+    });
+
+    console.log(newArray);
+
+
+
+
+    
     return(
         <div>
             <GoogleMap
-                zoom={11}
+                zoom={12}
                 center={center}
                 mapContainerStyle={{
                     width: '100%',
@@ -35,9 +50,9 @@ export default function Map() {
                 /* onLoad={ (mapRef) => setMapRef(mapRef)} */
             >
                 
-                {markersApi.results.map(({ place_id, /* icon, */ name, geometry, business_status, formatted_address}) => (
+                {markersJson.results.map(({ place_id, name, geometry, business_status, formatted_address}) => (
                     <Marker
-                        /* icon={icon} */
+                        icon="http://bafar1.wpengine.com/wp-content/uploads/2022/05/bafar.png"
                         key={place_id}
                         position={geometry.location}
                         /* onClick={() => console.log(name)} */

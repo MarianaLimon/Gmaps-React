@@ -3,9 +3,19 @@
     object-fit: contain;
     box-shadow: 4px 8px 19px 0 rgba(105, 105, 105, 0.16);
     background-color: #fff;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .logo-tienda{
     width: 250px;
+}
+
+.box-scroll{
+    height: 500px;
+	/* width: 200px; */
+	border: none;
+	background: #f1f1f1;
+	overflow-y: scroll;
+    padding: 0px 20px;
 }
