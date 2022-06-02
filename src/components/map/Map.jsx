@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
 import { GoogleMap, Marker, useJsApiLoader, InfoWindow } from '@react-google-maps/api';
+import { useEffect } from "react";
+
 import './Map.css'
 
 /* import markersApi from "https://bafar1.wpengine.com/api/data.php?query=all&location=18.9821252%2C-99.2363548"; */
 import markersApi from "../../../src/assets/data/data-api-v2.json";
 
-export default function Map() {
 
-    const center = {lat: 19.432608, lng: -99.133209}
+export default function Map() {
+    useEffect(() => {
+        console.log("cargado");
+        navigator.geolocation.getCurrentPosition(function(position) {
+        setCenter({lat: position.coords.latitude, lng: position.coords.longitude});       
+    });
+    }, []);
+    let [center, setCenter] = useState({lat: 19.432608, lng: -99.133209})
+    let myRef = React.createRef();
+    
+    
 
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -37,15 +48,19 @@ export default function Map() {
     return(
         <div>
             <GoogleMap
-                zoom={12}
+                zoom={10}
                 center={center}
                 mapContainerStyle={{
                     width: '100%',
                     height: '500px'
                 }}
+                ref={myRef}
                 /* onLoad={ (mapRef) => setMapRef(mapRef)} */
             >
-                
+                <Marker
+                        key="user"
+                        position={center}
+                    ></Marker>   
                 {arrayMarkersApi.map(({ place_id, name, geometry, formatted_address, opening_hours}) => (
                     <Marker
                         icon="http://bafar1.wpengine.com/wp-content/uploads/2022/05/bafar.png"
