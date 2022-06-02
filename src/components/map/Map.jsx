@@ -21,7 +21,7 @@ export default function Map() {
     
 
     const {isLoaded} = useJsApiLoader({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        googleMapsApiKey: "AIzaSyDc6daoUWkjfA8GofqZeLv11iNQfxGFRlE",
     })
 
     const [activeMarker, setActiveMarker] = useState(null);
@@ -63,7 +63,7 @@ export default function Map() {
                     ></Marker>   
                 {arrayMarkersApi.map(({ place_id, name, geometry, formatted_address, opening_hours}) => (
                     <Marker
-                        icon="http://bafar1.wpengine.com/wp-content/uploads/2022/05/bafar.png"
+                        icon="//bafar1.wpengine.com/wp-content/uploads/2022/05/bafar.png"
                         key={place_id}
                         position={geometry.location}
                         onClick={() => handleActiveMarker(place_id)}
