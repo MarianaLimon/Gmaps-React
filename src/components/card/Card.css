@@ -1,4 +1,7 @@
 .card-shop{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     padding: 35px 10px 35px 10px;
     object-fit: contain;
     box-shadow: 4px 8px 19px 0 rgba(105, 105, 105, 0.16);
@@ -8,7 +11,7 @@
 }
 
 .logo-tienda{
-    width: 250px;
+    width: 50%;
 }
 
 .box-scroll{
@@ -18,4 +21,13 @@
 	background: #f1f1f1;
 	overflow-y: scroll;
     padding: 0px 20px;
+}
+
+@media screen and (max-width:770px){
+    .card-shop {
+        display: block;
+    }
+    .logo-tienda{
+        padding-bottom: 20px;
+    }
 }

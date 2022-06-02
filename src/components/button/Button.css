@@ -1,7 +1,7 @@
 .btn-comprar{
     background-color: #159A40;
     color: #fff;
-    padding: 20px 50px;
+    padding: 1rem 2rem;
     border: none;
     font-size: 18px;
     font-weight: bold;
@@ -9,4 +9,10 @@
 
 .btn-comprar:hover{
     background-color: #fc8523;
+}
+
+@media screen and (max-width:770px){
+    .btn-comprar {
+        padding: 15px 30px;
+    }
 }

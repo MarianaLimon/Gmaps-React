@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GoogleMap, Marker, useJsApiLoader, InfoWindow } from '@react-google-maps/api';
+import './Map.css'
 /* import markersApi from "https://bafar1.wpengine.com/api/data.php?query=all&location=18.9821252%2C-99.2363548"; */
-import markersJson from "../../../src/assets/data/data-api.json";
 
 import markersApi from "../../../src/assets/data/data-api-v2.json";
 
@@ -25,17 +25,11 @@ export default function Map() {
 
     const center = {lat: 19.432608, lng: -99.133209}
 
-    
-    let newArray = []
 
+    let arrayMarkersApi = []
     Object.entries(markersApi).forEach(([key, value]) => {
-        Object.entries(value.results).forEach(([key, value]) => newArray.push(value))
+        Object.entries(value.results).forEach(([key, value]) => arrayMarkersApi.push(value))
     });
-
-    console.log(newArray);
-
-
-
 
     
     return(
@@ -50,20 +44,17 @@ export default function Map() {
                 /* onLoad={ (mapRef) => setMapRef(mapRef)} */
             >
                 
-                {markersJson.results.map(({ place_id, name, geometry, business_status, formatted_address}) => (
+                {arrayMarkersApi.map(({ place_id, name, geometry, formatted_address, opening_hours}) => (
                     <Marker
                         icon="http://bafar1.wpengine.com/wp-content/uploads/2022/05/bafar.png"
                         key={place_id}
                         position={geometry.location}
-                        /* onClick={() => console.log(name)} */
                         onClick={() => handleActiveMarker(place_id)}
-                        
                     >
                         {activeMarker === place_id ? (
-                            <InfoWindow onCloseClick={() => setActiveMarker(null)} options={{ width: 60}}>
-                            <div>
-                                <h3>{name}</h3>
-                                <p>{business_status}</p>
+                            <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+                            <div className='div-info-window'>
+                                <h3 className='title-info-window'>{name}</h3>
                                 <p>{formatted_address}</p>
                             </div>
                             </InfoWindow>
