@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { GoogleMap, Marker, useJsApiLoader, InfoWindow } from '@react-google-maps/api';
 import './Map.css'
-/* import markersApi from "https://bafar1.wpengine.com/api/data.php?query=all&location=18.9821252%2C-99.2363548"; */
 
+/* import markersApi from "https://bafar1.wpengine.com/api/data.php?query=all&location=18.9821252%2C-99.2363548"; */
 import markersApi from "../../../src/assets/data/data-api-v2.json";
 
 export default function Map() {
 
+    const center = {lat: 19.432608, lng: -99.133209}
+
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     })
-
-    /* const [mapRef, setMapRef] = useState(null) */
 
     const [activeMarker, setActiveMarker] = useState(null);
     const handleActiveMarker = (marker) => {
@@ -20,18 +20,20 @@ export default function Map() {
         }
         setActiveMarker(marker);
       };
-
     if (!isLoaded) { return <div>Loading...</div> }
-
-    const center = {lat: 19.432608, lng: -99.133209}
-
 
     let arrayMarkersApi = []
     Object.entries(markersApi).forEach(([key, value]) => {
-        Object.entries(value.results).forEach(([key, value]) => arrayMarkersApi.push(value))
+        Object.entries(value.results).forEach(([key, value]) => {
+            let repeated  = arrayMarkersApi.some(function(e) {
+                return e.place_id===value.place_id;
+            });  
+            if(!repeated){
+                arrayMarkersApi.push(value);
+            }
+        });
     });
 
-    
     return(
         <div>
             <GoogleMap
@@ -66,6 +68,3 @@ export default function Map() {
     </div>
     )
 }
-
-
-
