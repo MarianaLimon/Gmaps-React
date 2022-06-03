@@ -4,21 +4,42 @@ import { useEffect } from "react";
 
 import './Map.css'
 
-/* import markersApi from "https://bafar1.wpengine.com/api/data.php?query=all&location=18.9821252%2C-99.2363548"; */
-import markersApi from "../../../src/assets/data/data-api-v2.json";
-
 
 export default function Map() {
     useEffect(() => {
-        console.log("cargado");
         navigator.geolocation.getCurrentPosition(function(position) {
-        setCenter({lat: position.coords.latitude, lng: position.coords.longitude});       
-    });
+            setCenter({lat: position.coords.latitude, lng: position.coords.longitude});       
+            //let url="https://bafar1.wpengine.com/api/data.php?query=all&location="+position.coords.latitude+"%2C"+position.coords.longitude;
+            let url="https://cursosobesidad.mx/bafar/api/data.php?query=all&location="+position.coords.latitude+"%2C"+position.coords.longitude;
+            fetchJSON(url).then(json => {
+                setMarkersApi(json);
+                setJsonLoaded(true);
+              });
+            /*
+            fetch(url)
+            .then(response => {
+            return response.json();
+            })
+            .then(jsondata => {
+                console.log(jsondata);
+                setMarkersApi(jsondata);
+                setJsonLoaded(true);
+            });
+            */
+           
+        });
     }, []);
-    let [center, setCenter] = useState({lat: 19.432608, lng: -99.133209})
-    let myRef = React.createRef();
+    const [center, setCenter] = useState({lat: 19.432608, lng: -99.133209})
+    const [jsonLoaded, setJsonLoaded] = useState(false);
+    const [markersApi, setMarkersApi] = useState({});
     
-    
+    async function fetchJSON(url) {
+        console.log(url);
+        const response = await fetch(url);
+        const markers = await response.json();
+        console.log(markers);
+        return markers;
+      }
 
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: "AIzaSyDc6daoUWkjfA8GofqZeLv11iNQfxGFRlE",
@@ -31,7 +52,8 @@ export default function Map() {
         }
         setActiveMarker(marker);
       };
-    if (!isLoaded) { return <div>Loading...</div> }
+    if (!isLoaded) { return <div>Cargando..</div> }
+    if (!jsonLoaded) { return <div>Cargando...</div> }
 
     let arrayMarkersApi = []
     Object.entries(markersApi).forEach(([key, value]) => {
@@ -48,14 +70,12 @@ export default function Map() {
     return(
         <div>
             <GoogleMap
-                zoom={10}
+                zoom={14}
                 center={center}
                 mapContainerStyle={{
                     width: '100%',
                     height: '500px'
                 }}
-                ref={myRef}
-                /* onLoad={ (mapRef) => setMapRef(mapRef)} */
             >
                 <Marker
                         key="user"
