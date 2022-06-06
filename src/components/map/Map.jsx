@@ -29,6 +29,7 @@ export default function Map() {
            
         });
     }, []);
+
     const [center, setCenter] = useState({lat: 19.432608, lng: -99.133209})
     const [jsonLoaded, setJsonLoaded] = useState(false);
     const [markersApi, setMarkersApi] = useState({});
@@ -150,7 +151,7 @@ export default function Map() {
                         icon="//bafar1.wpengine.com/wp-content/uploads/2022/05/bafar.png"
                         key={place_id}
                         position={geometry.location}
-                        onClick={() => handleActiveMarker(place_id)}
+                        onClick={() => {setActiveMarker(null);handleActiveMarker(place_id);}}
                     >
                         {activeMarker === place_id ? (
                             <InfoWindow onCloseClick={() => setActiveMarker(null)}>
