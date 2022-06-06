@@ -9,8 +9,8 @@ export default function Map() {
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(function(position) {
             setCenter({lat: position.coords.latitude, lng: position.coords.longitude});       
-            //let url="https://bafar1.wpengine.com/api/data.php?query=all&location="+position.coords.latitude+"%2C"+position.coords.longitude;
-            let url="https://cursosobesidad.mx/bafar/api/data.php?query=all&location="+position.coords.latitude+"%2C"+position.coords.longitude;
+            //let url="https://bafar1.wpengine.com/api/data.php?query=Supercenter&location="+position.coords.latitude+"%2C"+position.coords.longitude;
+            let url="http://desarrollo.centralmedia.com.mx/bafar/data.php?query=Supercenter&location="+position.coords.latitude+"%2C"+position.coords.longitude;
             fetchJSON(url).then(json => {
                 setMarkersApi(json);
                 setJsonLoaded(true);
