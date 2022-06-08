@@ -11,7 +11,6 @@ import ButtonMapa from '../../../src/components/buttons/ButtonMapa';
 import logoWalmart from '../../assets/imgs/walmart.jpg';
 import logoWalmartExpress from '../../assets/imgs/walmart-express.jpg'
 import logoSoriana from '../../assets/imgs/soriana.jpg';
-import logoCityMarket from '../../assets/imgs/city.jpg';
 import logoAlsuper from "../../assets/imgs/alsuper.jpg";
 import logoBodegaAurrera from "../../assets/imgs/bodega.jpg";
 import logoChedraui from "../../assets/imgs/chedraui.jpg";
@@ -34,15 +33,18 @@ export default function Map() {
     const [center, setCenter] = useState({lat: 19.432608, lng: -99.133209})
     const [jsonLoaded, setJsonLoaded] = useState(false);
     const [markersApi, setMarkersApi] = useState({});
+    const [brand, setBrand] = useState('');
+    
     
     async function fetchJSON(url) {
         console.log(url);
         const response = await fetch(url);
         const markers = await response.json();
-        console.log(markers);
+        /* console.log(markers); */
         return markers;
     }
     function updateBrand(brand) {
+        
         setJsonLoaded(false);
 
         //let url="https://bafar1.wpengine.com/api/data.php?query="+brand+"&location="+center.lat+"%2C"+center.lng;
@@ -51,6 +53,8 @@ export default function Map() {
                 setMarkersApi(json);
                 setJsonLoaded(true);
         });
+        
+        setBrand(brand)
     }
 
     const {isLoaded} = useJsApiLoader({
@@ -83,64 +87,64 @@ export default function Map() {
 
     <div className='row pt-4 pb-4'>
         <div className='col-12 col-sm-12 col-md-12 col-lg-6'>
-        <section className='box-scroll'>
-                <div className='card-shop'>
+            <section className='box-scroll'>
+                <div className={'card-shop' + (brand === 'Supercenter' ? ' brand-active' : '')}>
                     <img src={logoWalmart} alt="" className='logo-tienda'/>
                     <div>
                         <a href="https://super.walmart.com.mx/productos?Ntt=bafar" target="_blank" rel="noopener noreferrer" className='btn-ancla'><ButtonComprar /></a>
                         <div onClick={updateBrand.bind(this,"Supercenter")}><ButtonMapa /></div>
                     </div>
                 </div>
-                <div className='card-shop Acard-selected'>
+                <div className={'card-shop' + (brand === 'Walmart+Express' ? ' brand-active' : '')}>
                     <img src={logoWalmartExpress} alt="" className='logo-tienda'/>
                     <div>
                         <a href="https://super.walmart.com.mx/productos?Ntt=bafar" target="_blank" rel="noopener noreferrer"><ButtonComprar /></a>
                         <div onClick={updateBrand.bind(this,"Walmart+Express")}><ButtonMapa /></div>
                     </div>
                 </div>
-                <div className='card-shop'>
+                <div className={'card-shop' + (brand === 'Al+Super' ? ' brand-active' : '')}>
                     <img src={logoAlsuper} alt="" className='logo-tienda'/>
                     <div>
                         <a href="https://www.alsuper.com/filtros?keyword=bafar" target="_blank" rel="noopener noreferrer"><ButtonComprar /></a>
                         <div onClick={updateBrand.bind(this,"Al+Super")}><ButtonMapa /></div>
                     </div>
                 </div>
-                <div className='card-shop'>
+                <div className={'card-shop' + (brand === 'Bodega+Aurrera' ? ' brand-active' : '')}>
                     <img src={logoBodegaAurrera} alt="" className='logo-tienda'/>
                     <div>
                         <a href="https://despensa.bodegaaurrera.com.mx/search?name=bafar" target="_blank" rel="noopener noreferrer"><ButtonComprar /></a>
                         <div onClick={updateBrand.bind(this,"Bodega+Aurrera")}><ButtonMapa /></div>
                     </div>
                 </div>
-                <div className='card-shop'>
+                <div className={'card-shop' + (brand === 'Chedraui' ? ' brand-active' : '')}>
                     <img src={logoChedraui} alt="" className='logo-tienda'/>
                     <div>
                         <a href="https://www.chedraui.com.mx/search?text=bafar&method=enter" target="_blank" rel="noopener noreferrer"><ButtonComprar /></a>
                         <div onClick={updateBrand.bind(this,"Chedraui")}><ButtonMapa /></div>
                     </div>
                 </div>
-                <div className='card-shop'>
+                <div className={'card-shop' + (brand === 'Soriana' ? ' brand-active' : '')}>
                     <img src={logoSoriana} alt="" className='logo-tienda'/>
                     <div>
                         <a href="https://www.soriana.com/buscar?q=bafar&cid=&search-button=" target="_blank" rel="noopener noreferrer"><ButtonComprar /></a>
                         <div onClick={updateBrand.bind(this,"Soriana")}><ButtonMapa /></div>
                     </div>
                 </div>
-                <div className='card-shop'>
+                <div className={'card-shop' + (brand === 'HEB' ? ' brand-active' : '')}>
                     <img src={logoHeb} alt="" className='logo-tienda'/>
                     <div>
                         <a href="https://www.heb.com.mx/catalogsearch/result/?q=bafar" target="_blank" rel="noopener noreferrer"><ButtonComprar /></a>
                         <div onClick={updateBrand.bind(this,"HEB")}><ButtonMapa /></div>
                     </div>
                 </div>
-                <div className='card-shop'>
+                <div className={'card-shop' + (brand === 'La+Comer' ? ' brand-active' : '')}>
                     <img src={logoLacomer} alt="" className='logo-tienda'/>
                     <div>
                         <a href="https://www.lacomer.com.mx/lacomer/?gclid=website#!/item-search/287/bafar/false?p=1&t=0&succId=287&succFmt=100" target="_blank" rel="noopener noreferrer"><ButtonComprar /></a>
                         <div onClick={updateBrand.bind(this,"La+Comer")}><ButtonMapa /></div>
                     </div>
                 </div>
-                <div className='card-shop'>
+                <div className={'card-shop' + (brand === 'Merqueo' ? ' brand-active' : '')}>
                     <img src={logoMerqueo} alt="" className='logo-tienda'/>
                     <div>
                         <a href="https://merqueo.com.mx/mexico-df/super-ahorro/search/bafar" target="_blank" rel="noopener noreferrer"><ButtonComprar /></a>
@@ -148,21 +152,21 @@ export default function Map() {
 
                     </div>
                 </div>
-                <div className='card-shop'>
+                {/* <div className={'card-shop' + (brand === 'City+Market' ? ' brand-active' : '')}>
                     <img src={logoCityMarket} alt="" className='logo-tienda'/>
                     <div>
                         <a href="https://www.citymarket.com.mx/comprasbiencitymarket/" target="_blank" rel="noopener noreferrer"><ButtonComprar /></a>
                         <div onClick={updateBrand.bind(this,"")}><ButtonMapa /></div>
                     </div>
-                </div>
-                <div className='card-shop'>
+                </div> */}
+                <div className={'card-shop' + (brand === 'Calimax' ? ' brand-active' : '')}>
                     <img src={logoCalimax} alt="" className='logo-tienda'/>
                     <div>
                         <a href="https://tienda.calimax.com.mx/bafar?_q=bafar&map=ft" target="_blank" rel="noopener noreferrer"><ButtonComprar /></a>
                         <div onClick={updateBrand.bind(this,"Calimax")}><ButtonMapa /></div>
                     </div>
                 </div>
-                <div className='card-shop'>
+                <div className={'card-shop' + (brand === 'OXXO' ? ' brand-active' : '')}>
                     <img src={logoOxxo} alt="" className='logo-tienda'/>
                     <div>
                         <a href="https://www.oxxo.com/" target="_blank" rel="noopener noreferrer"><ButtonComprar /></a>
@@ -171,6 +175,7 @@ export default function Map() {
                 </div>
             </section>
         </div>
+
         <div className='col-12 col-sm-12 col-md-12 col-lg-6'>
             <GoogleMap
                     zoom={14}
@@ -203,7 +208,9 @@ export default function Map() {
                     ))}  
                     
             </GoogleMap>
+            <p>Tiendas : {brand}</p>
         </div>
+        
     </div>
             
     )

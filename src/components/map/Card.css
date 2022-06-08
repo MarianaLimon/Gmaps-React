@@ -10,7 +10,7 @@
     margin-top: 20px;
 }
 
-.card-selected{
+.brand-active{
     border: solid #FC8523;
     box-shadow: 4px 8px 19px 0 rgba(238, 98, 33, 0.726);
     background-color: #fff;
@@ -29,7 +29,6 @@
     padding: 0px 20px;
 }
 .card-shop img {
-    cursor: pointer;
     padding: 5px;
     border: solid thin white;
 
